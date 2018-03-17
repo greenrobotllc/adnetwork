@@ -29,12 +29,6 @@ return [
         'secret' => env('SPARKPOST_SECRET'),
     ],
 
-    // 'stripe' => [
-    //     'model' => App\User::class,
-    //     'key' => 'pk_live_aruhZ69jhLe94zNRjKz70Rjk',
-    //     'secret' => 'sk_live_LaurMYqexpJRQxcvME6BOyVh',
-    // ],
-
    'stripe' => [
         'model' => App\User::class,
         'key' => env('STRIPE_KEY'),

@@ -112,14 +112,6 @@ class ChargeController extends Controller
       }
       return redirect('/account?deposited=yes');
 
-    // 	Stripe::Charge::create(array(
-    // 		"amount" => 2000,
-    // 		"currency" => "usd",
-  		// 	"source" => "tok_18us4VDP7AxwABderX0RfZhW", // obtained with Stripe.js
-  		// 	"metadata" => array("order_id" => "6735")
-  		// ));
-
-    	//return "charge";
     }
 
 }
