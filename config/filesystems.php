@@ -57,10 +57,10 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key' => "AKIAJM26NDTUXENKSYJQ",
-            'secret' =>"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",
+            'key' => " env('S3_KEY')",
+            'secret' =>" env('S3_SECRET')",
             'region' => "us-east-1",
-            'bucket' => "gradnetwork",
+            'bucket' => " env('S3_BUCKET')",
         ],
 
     ],
