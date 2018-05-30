@@ -4,6 +4,19 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
+	"repositories": [
+	{
+	    "type": "package",
+	    "package": {
+	        "name": "greenrobotllc/laravel-resourceful",
+	        "version": "dev-master",
+	        "source": {
+	            "url": "https://github.com/greenrobotllc/laravel-resourceful.git",
+	            "type": "git",
+	            "reference": "master"
+	        }
+	    }
+	}],
     "require": {
         "php": ">=5.6.4",
         "aws/aws-sdk-php-laravel": "~3.0",
@@ -23,7 +36,7 @@
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~6.0",
-        "remoblaser/resourceful": "^1.0.1",
+        "greenrobotllc/laravel-resourceful": "dev-master",
         "filp/whoops": "~2.0"
     },
     "autoload": {

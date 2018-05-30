@@ -7,6 +7,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Schema;
 use \Auth;
 use App\User;
+	
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -55,7 +56,6 @@ class AppServiceProvider extends ServiceProvider
 
                 //echo($user_id);
         if ($this->app->environment() == 'local') {
-           $this->app->register('Remoblaser\Resourceful\ResourcefulServiceProvider');
             $this->app->register('Laracasts\Generators\GeneratorsServiceProvider');
 
         }
