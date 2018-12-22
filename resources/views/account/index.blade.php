@@ -78,7 +78,7 @@ $('#fundButton').on('click', function(e) {
 });
 
 var handler = StripeCheckout.configure({
-  key: 'pk_live_aruhZ69jhLe94zNRjKz70Rjk',
+  key: 'pk_test_3XA3aaSYbw4a5fe22xRJ7Hqx',
   locale: 'auto',
   name: 'Liberty Ads Account',
   description: 'One-time payment',
