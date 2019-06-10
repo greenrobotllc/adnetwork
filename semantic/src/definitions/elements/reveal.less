@@ -1,6 +1,6 @@
 /*!
- * # Semantic UI - Reveal
- * http://github.com/semantic-org/semantic-ui/
+ * # Fomantic-UI - Reveal
+ * http://github.com/fomantic/Fomantic-UI/
  *
  *
  * Released under the MIT license
@@ -24,13 +24,13 @@
 .ui.reveal  {
   display: inherit;
   position: relative !important;
-  font-size: 0em !important;
+  font-size: 0 !important;
 }
 
 .ui.reveal > .visible.content {
   position: absolute !important;
-  top: 0em !important;
-  left: 0em !important;
+  top: 0 !important;
+  left: 0 !important;
   z-index: @topZIndex !important;
   transition: @transition;
 }
@@ -64,9 +64,10 @@
 .ui.slide.reveal > .content {
   display: block;
   width: 100%;
+  white-space: normal;
   float: left;
 
-  margin: 0em;
+  margin: 0;
   transition: @slideTransition;
 }
 
@@ -75,7 +76,7 @@
 }
 .ui.slide.reveal > .hidden.content {
   position: absolute !important;
-  left: 0% !important;
+  left: 0 !important;
   width: 100% !important;
   transform: translateX(100%) !important;
 }
@@ -154,8 +155,9 @@
 .ui.move.reveal > .content {
   display: block;
   float: left;
+  white-space: normal;
 
-  margin: 0em;
+  margin: 0;
   transition: @moveTransition;
 }
 
@@ -164,7 +166,7 @@
 }
 .ui.move.reveal > .hidden.content {
   position: absolute !important;
-  left: 0% !important;
+  left: 0 !important;
   width: 100% !important;
 }
 .ui.move.active.reveal > .visible.content,
@@ -232,6 +234,14 @@
   display: none !important;
 }
 
+
+/*******************************
+           Coupling
+*******************************/
+
+.ui.reveal > .ui.ribbon.label {
+  z-index: @overlayZIndex;
+}
 
 /*******************************
            Variations

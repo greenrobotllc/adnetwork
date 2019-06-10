@@ -39,6 +39,17 @@
 @import (optional) "@{siteFolder}/@{type}s/@{element}.variables";
 
 
+/*-------------------------
+    Central Color Map
+-------------------------*/
+
+/* Default */
+@import "@{themesFolder}/default/globals/colors.less";
+
+/* Site Theme */
+@import (optional) "@{themesFolder}/@{site}/globals/colors.less";
+
+
 /*******************************
              Mix-ins
 *******************************/
@@ -48,7 +59,7 @@
 -------------------*/
 
 .loadFonts() when (@importGoogleFonts) {
-  @import url('@{googleProtocol}fonts.googleapis.com/css?family=@{googleFontRequest}');
+  @import (css) url('@{googleProtocol}fonts.googleapis.com/css?family=@{googleFontRequest}');
 }
 
 /*------------------
@@ -56,6 +67,7 @@
 -------------------*/
 
 .loadUIOverrides() {
+  @import (optional) "@{themesFolder}/default/@{type}s/@{element}.overrides";
   @import (optional) "@{themesFolder}/@{theme}/@{type}s/@{element}.overrides";
   @import (optional) "@{siteFolder}/@{type}s/@{element}.overrides";
 }

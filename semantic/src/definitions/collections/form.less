@@ -1,6 +1,6 @@
 /*!
- * # Semantic UI - Form
- * http://github.com/semantic-org/semantic-ui/
+ * # Fomantic-UI - Form
+ * http://github.com/fomantic/Fomantic-UI/
  *
  *
  * Released under the MIT license
@@ -49,12 +49,12 @@
 
 .ui.form .field:last-child,
 .ui.form .fields:last-child .field {
-  margin-bottom: 0em;
+  margin-bottom: 0;
 }
 
 .ui.form .fields .field {
   clear: both;
-  margin: 0em;
+  margin: 0;
 }
 
 
@@ -112,10 +112,10 @@
 .ui.form input[type="file"],
 .ui.form input[type="url"] {
   font-family: @inputFont;
-  margin: 0em;
+  margin: 0;
   outline: none;
   -webkit-appearance: none;
-  tap-highlight-color:  rgba(255, 255, 255, 0);
+  -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
 
   line-height: @inputLineHeight;
   padding: @inputPadding;
@@ -131,12 +131,11 @@
 
 /* Text Area */
 .ui.form textarea {
-  margin: 0em;
+  margin: 0;
   -webkit-appearance: none;
-  tap-highlight-color:  rgba(255, 255, 255, 0);
+  -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
 
   padding: @textAreaPadding;
-  font-size: @textAreaFontSize;
   background: @textAreaBackground;
   border: @textAreaBorder;
   outline: none;
@@ -145,6 +144,7 @@
   box-shadow: @inputBoxShadow;
   transition: @textAreaTransition;
   font-size: @textAreaFontSize;
+  font-family: @inputFont;
   line-height: @textAreaLineHeight;
   resize: @textAreaResize;
 }
@@ -157,6 +157,52 @@
 .ui.form textarea,
 .ui.form input[type="checkbox"] {
   vertical-align: @checkboxVerticalAlign;
+}
+
+/*--------------------
+    Checkbox margin
+---------------------*/
+
+.ui.form .fields:not(.grouped):not(.inline) .field:not(:only-child) .ui.checkbox {
+  margin-top: @inputLineHeight + @checkboxFieldTopMargin;
+}
+.ui.form .fields:not(.grouped):not(.inline) .field:not(:only-child) .ui.toggle.checkbox {
+  margin-top: @inputLineHeight + @checkboxToggleFieldTopMargin;
+}
+.ui.form .fields:not(.grouped):not(.inline) .field:not(:only-child) .ui.slider.checkbox {
+  margin-top: @inputLineHeight + @checkboxSliderFieldTopMargin;
+}
+.ui.ui.form .field .fields .field:not(:only-child) .ui.checkbox {
+  margin-top: @checkboxFieldTopMargin / 2;
+}
+.ui.ui.form .field .fields .field:not(:only-child) .ui.toggle.checkbox {
+  margin-top: @checkboxToggleFieldTopMargin / 2;
+}
+.ui.ui.form .field .fields .field:not(:only-child) .ui.slider.checkbox {
+  margin-top: @checkboxSliderFieldTopMargin / 2;
+}
+
+/*--------------------
+      Transparent
+---------------------*/
+
+.ui.form .field .transparent.input input,
+.ui.form .field input.transparent,
+.ui.form .field textarea.transparent {
+  padding: @transparentPadding !important;
+}
+
+.ui.form .field textarea.transparent {
+  border-color: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.ui.form .field.error .transparent.input input,
+.ui.form .field.error input.transparent,
+.ui.form .field.error textarea.transparent {
+  background-color: @transparentFormErrorBackground !important;
+  color: @transparentFormErrorColor !important;
 }
 
 /*--------------------------
@@ -191,6 +237,7 @@
 
 /* Block */
 .ui.form .field > .selection.dropdown {
+  min-width: auto;
   width: 100%;
 }
 .ui.form .field > .selection.dropdown > .dropdown.icon {
@@ -243,7 +290,7 @@
 .ui.form .two.fields .ui.input input,
 .ui.form .wide.field .ui.input input {
   flex: 1 0 auto;
-  width: 0px;
+  width: 0;
 }
 
 
@@ -253,13 +300,14 @@
 
 .ui.form .success.message,
 .ui.form .warning.message,
-.ui.form .error.message {
+.ui.form .error.message,
+.ui.form .error.message:empty {
   display: none;
 }
 
 /* Assumptions */
 .ui.form .message:first-child {
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 /*--------------------
@@ -279,11 +327,11 @@
 }
 .ui.form .inline.fields .field .prompt:before,
 .ui.form .inline.field .prompt:before {
-  border-width: 0px 0px @inlinePromptBorderWidth @inlinePromptBorderWidth;
+  border-width: 0 0 @inlinePromptBorderWidth @inlinePromptBorderWidth;
   bottom: auto;
   right: auto;
   top: 50%;
-  left: 0em;
+  left: 0;
 }
 
 
@@ -296,19 +344,19 @@
 ---------------------*/
 
 .ui.form .field.field input:-webkit-autofill {
-  box-shadow: 0px 0px 0px 100px @inputAutoFillBackground inset !important;
+  box-shadow: 0 0 0 100px @inputAutoFillBackground inset !important;
   border-color: @inputAutoFillBorder !important;
 }
 
 /* Focus */
 .ui.form .field.field input:-webkit-autofill:focus {
-  box-shadow: 0px 0px 0px 100px @inputAutoFillFocusBackground inset !important;
+  box-shadow: 0 0 0 100px @inputAutoFillFocusBackground inset !important;
   border-color: @inputAutoFillFocusBorder !important;
 }
 
 /* Error */
 .ui.form .error.error input:-webkit-autofill {
-  box-shadow: 0px 0px 0px 100px @inputAutoFillErrorBackground inset !important;
+  box-shadow: 0 0 0 100px @inputAutoFillErrorBackground inset !important;
   border-color: @inputAutoFillErrorBorder !important;
 }
 
@@ -323,7 +371,7 @@
   color: @inputPlaceholderColor;
 }
 .ui.form :-ms-input-placeholder {
-  color: @inputPlaceholderColor;
+  color: @inputPlaceholderColor !important;
 }
 .ui.form ::-moz-placeholder {
   color: @inputPlaceholderColor;
@@ -333,7 +381,7 @@
   color: @inputPlaceholderFocusColor;
 }
 .ui.form :focus:-ms-input-placeholder {
-  color: @inputPlaceholderFocusColor;
+  color: @inputPlaceholderFocusColor !important;
 }
 .ui.form :focus::-moz-placeholder {
   color: @inputPlaceholderFocusColor;
@@ -504,7 +552,6 @@
   border-color: @inputErrorFocusBorder;
   color: @inputErrorFocusColor;
 
-  -webkit-appearance: none;
   box-shadow: @inputErrorFocusBoxShadow;
 }
 
@@ -617,13 +664,18 @@
 .ui.loading.form:before {
   position: absolute;
   content: '';
-  top: 0%;
-  left: 0%;
+  top: 0;
+  left: 0;
   background: @loaderDimmerColor;
   width: 100%;
   height: 100%;
   z-index: @loaderDimmerZIndex;
 }
+
+.ui.loading.form.segments:before {
+  border-radius: @defaultBorderRadius;
+}
+
 .ui.loading.form:after {
   position: absolute;
   content: '';
@@ -634,29 +686,14 @@
   width: @loaderSize;
   height: @loaderSize;
 
-  animation: form-spin @loaderSpeed linear;
-  animation-iteration-count: infinite;
-
+  animation: loader @loaderSpeed infinite linear;
+  border: @loaderLineWidth solid @loaderLineColor;
   border-radius: @circularRadius;
 
-  border-color: @loaderLineColor @loaderFillColor @loaderFillColor @loaderFillColor;
-  border-style: solid;
-  border-width: @loaderLineWidth;
-
-  box-shadow: 0px 0px 0px 1px transparent;
+  box-shadow: 0 0 0 1px transparent;
   visibility: visible;
   z-index: @loaderLineZIndex;
 }
-
-@keyframes form-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 
 /*******************************
          Element Types
@@ -670,7 +707,8 @@
 .ui.form .required.fields.grouped > label:after,
 .ui.form .required.field > label:after,
 .ui.form .required.fields:not(.grouped) > .field > .checkbox:after,
-.ui.form .required.field > .checkbox:after {
+.ui.form .required.field > .checkbox:after,
+.ui.form label.required:after {
   margin: @requiredMargin;
   content: @requiredContent;
   color: @requiredColor;
@@ -678,7 +716,8 @@
 
 .ui.form .required.fields:not(.grouped) > .field > label:after,
 .ui.form .required.fields.grouped > label:after,
-.ui.form .required.field > label:after {
+.ui.form .required.field > label:after,
+.ui.form label.required:after {
   display: inline-block;
   vertical-align: top;
 }
@@ -686,7 +725,7 @@
 .ui.form .required.fields:not(.grouped) > .field > .checkbox:after,
 .ui.form .required.field > .checkbox:after {
   position: absolute;
-  top: 0%;
+  top: 0;
   left: 100%;
 }
 
@@ -713,7 +752,12 @@
 .ui.inverted.form .inline.field > p {
   color: @invertedLabelColor;
 }
-
+.ui.inverted.loading.form {
+  color: @invertedLoaderLineColor;
+}
+.ui.inverted.loading.form:before {
+  background: @loaderInvertedDimmerColor;
+}
 /* Inverted Field */
 .ui.inverted.form input:not([type]),
 .ui.inverted.form input[type="date"],
@@ -733,7 +777,6 @@
   box-shadow: @invertedInputBoxShadow;
 }
 
-
 /*--------------------
      Field Groups
 ---------------------*/
@@ -744,7 +787,7 @@
   margin: @groupedMargin;
 }
 .ui.form .grouped.fields:last-child {
-  margin-bottom: 0em;
+  margin-bottom: 0;
 }
 
 .ui.form .grouped.fields > label {
@@ -759,7 +802,7 @@
 .ui.form .grouped.inline.fields .field {
   display: block;
   margin: @groupedFieldMargin;
-  padding: 0em;
+  padding: 0;
 }
 
 /*--------------------
@@ -826,28 +869,28 @@
     flex-wrap: wrap;
   }
 
-  .ui[class*="equal width"].form .fields > .field,
-  .ui.form [class*="equal width"].fields > .field,
-  .ui.form .two.fields > .fields,
-  .ui.form .two.fields > .field,
-  .ui.form .three.fields > .fields,
-  .ui.form .three.fields > .field,
-  .ui.form .four.fields > .fields,
-  .ui.form .four.fields > .field,
-  .ui.form .five.fields > .fields,
-  .ui.form .five.fields > .field,
-  .ui.form .six.fields > .fields,
-  .ui.form .six.fields > .field,
-  .ui.form .seven.fields > .fields,
-  .ui.form .seven.fields > .field,
-  .ui.form .eight.fields > .fields,
-  .ui.form .eight.fields > .field,
-  .ui.form .nine.fields > .fields,
-  .ui.form .nine.fields > .field,
-  .ui.form .ten.fields > .fields,
-  .ui.form .ten.fields > .field {
+  .ui[class*="equal width"].form:not(.unstackable) .fields > .field,
+  .ui.form:not(.unstackable) [class*="equal width"].fields:not(.unstackable) > .field,
+  .ui.form:not(.unstackable) .two.fields:not(.unstackable) > .fields,
+  .ui.form:not(.unstackable) .two.fields:not(.unstackable) > .field,
+  .ui.form:not(.unstackable) .three.fields:not(.unstackable) > .fields,
+  .ui.form:not(.unstackable) .three.fields:not(.unstackable) > .field,
+  .ui.form:not(.unstackable) .four.fields:not(.unstackable) > .fields,
+  .ui.form:not(.unstackable) .four.fields:not(.unstackable) > .field,
+  .ui.form:not(.unstackable) .five.fields:not(.unstackable) > .fields,
+  .ui.form:not(.unstackable) .five.fields:not(.unstackable) > .field,
+  .ui.form:not(.unstackable) .six.fields:not(.unstackable) > .fields,
+  .ui.form:not(.unstackable) .six.fields:not(.unstackable) > .field,
+  .ui.form:not(.unstackable) .seven.fields:not(.unstackable) > .fields,
+  .ui.form:not(.unstackable) .seven.fields:not(.unstackable) > .field,
+  .ui.form:not(.unstackable) .eight.fields:not(.unstackable) > .fields,
+  .ui.form:not(.unstackable) .eight.fields:not(.unstackable) > .field,
+  .ui.form:not(.unstackable) .nine.fields:not(.unstackable) > .fields,
+  .ui.form:not(.unstackable) .nine.fields:not(.unstackable) > .field,
+  .ui.form:not(.unstackable) .ten.fields:not(.unstackable) > .fields,
+  .ui.form:not(.unstackable) .ten.fields:not(.unstackable) > .field {
     width: @oneColumn !important;
-    margin: 0em 0em @rowDistance;
+    margin: 0 0 @rowDistance;
   }
 }
 
@@ -910,33 +953,33 @@
 
 /* Swap to full width on mobile */
 @media only screen and (max-width : @largestMobileScreen) {
-  .ui.form .two.fields > .fields,
-  .ui.form .two.fields > .field,
-  .ui.form .three.fields > .fields,
-  .ui.form .three.fields > .field,
-  .ui.form .four.fields > .fields,
-  .ui.form .four.fields > .field,
-  .ui.form .five.fields > .fields,
-  .ui.form .five.fields > .field,
-  .ui.form .fields > .two.wide.field,
-  .ui.form .fields > .three.wide.field,
-  .ui.form .fields > .four.wide.field,
-  .ui.form .fields > .five.wide.field,
-  .ui.form .fields > .six.wide.field,
-  .ui.form .fields > .seven.wide.field,
-  .ui.form .fields > .eight.wide.field,
-  .ui.form .fields > .nine.wide.field,
-  .ui.form .fields > .ten.wide.field,
-  .ui.form .fields > .eleven.wide.field,
-  .ui.form .fields > .twelve.wide.field,
-  .ui.form .fields > .thirteen.wide.field,
-  .ui.form .fields > .fourteen.wide.field,
-  .ui.form .fields > .fifteen.wide.field,
-  .ui.form .fields > .sixteen.wide.field {
+  .ui.form:not(.unstackable) .two.fields:not(.unstackable) > .fields,
+  .ui.form:not(.unstackable) .two.fields:not(.unstackable) > .field,
+  .ui.form:not(.unstackable) .three.fields:not(.unstackable) > .fields,
+  .ui.form:not(.unstackable) .three.fields:not(.unstackable) > .field,
+  .ui.form:not(.unstackable) .four.fields:not(.unstackable) > .fields,
+  .ui.form:not(.unstackable) .four.fields:not(.unstackable) > .field,
+  .ui.form:not(.unstackable) .five.fields:not(.unstackable) > .fields,
+  .ui.form:not(.unstackable) .five.fields:not(.unstackable) > .field,
+  .ui.form:not(.unstackable) .fields:not(.unstackable) > .two.wide.field,
+  .ui.form:not(.unstackable) .fields:not(.unstackable) > .three.wide.field,
+  .ui.form:not(.unstackable) .fields:not(.unstackable) > .four.wide.field,
+  .ui.form:not(.unstackable) .fields:not(.unstackable) > .five.wide.field,
+  .ui.form:not(.unstackable) .fields:not(.unstackable) > .six.wide.field,
+  .ui.form:not(.unstackable) .fields:not(.unstackable) > .seven.wide.field,
+  .ui.form:not(.unstackable) .fields:not(.unstackable) > .eight.wide.field,
+  .ui.form:not(.unstackable) .fields:not(.unstackable) > .nine.wide.field,
+  .ui.form:not(.unstackable) .fields:not(.unstackable) > .ten.wide.field,
+  .ui.form:not(.unstackable) .fields:not(.unstackable) > .eleven.wide.field,
+  .ui.form:not(.unstackable) .fields:not(.unstackable) > .twelve.wide.field,
+  .ui.form:not(.unstackable) .fields:not(.unstackable) > .thirteen.wide.field,
+  .ui.form:not(.unstackable) .fields:not(.unstackable) > .fourteen.wide.field,
+  .ui.form:not(.unstackable) .fields:not(.unstackable) > .fifteen.wide.field,
+  .ui.form:not(.unstackable) .fields:not(.unstackable) > .sixteen.wide.field {
     width: @oneColumn !important;
   }
   .ui.form .fields {
-    margin-bottom: 0em;
+    margin-bottom: 0;
   }
 }
 
@@ -959,7 +1002,7 @@
   align-items: center;
 }
 .ui.form .inline.fields .field {
-  margin: 0em;
+  margin: 0;
   padding: @inlineFieldsMargin;
 }
 
@@ -971,8 +1014,8 @@
 .ui.form .inline.field > p {
   display: inline-block;
   width: auto;
-  margin-top: 0em;
-  margin-bottom: 0em;
+  margin-top: 0;
+  margin-bottom: 0;
   vertical-align: baseline;
   font-size: @inlineLabelFontSize;
   font-weight: @inlineLabelFontWeight;
@@ -993,8 +1036,8 @@
   display: inline-block;
   width: auto;
 
-  margin-top: 0em;
-  margin-bottom: 0em;
+  margin-top: 0;
+  margin-bottom: 0;
 
   vertical-align: middle;
   font-size: @inlineInputSize;
@@ -1003,11 +1046,11 @@
 /* Label */
 .ui.form .inline.fields .field > :first-child,
 .ui.form .inline.field > :first-child {
-  margin: 0em @inlineLabelDistance 0em 0em;
+  margin: 0 @inlineLabelDistance 0 0;
 }
 .ui.form .inline.fields .field > :only-child,
 .ui.form .inline.field > :only-child {
-  margin: 0em;
+  margin: 0;
 }
 
 /* Wide */
@@ -1047,6 +1090,58 @@
   font-size: @huge;
 }
 .ui.massive.form {
+  font-size: @massive;
+}
+
+/* Dropdown */
+.ui.mini.form .field .dropdown {
+  font-size: @mini;
+}
+.ui.tiny.form .field .dropdown {
+  font-size: @tiny;
+}
+.ui.small.form .field .dropdown {
+  font-size: @small;
+}
+.ui.form .field .dropdown {
+  font-size: @medium;
+}
+.ui.large.form .field .dropdown {
+  font-size: @large;
+}
+.ui.big.form .field .dropdown {
+  font-size: @big;
+}
+.ui.huge.form .field .dropdown {
+  font-size: @huge;
+}
+.ui.massive.form .field .dropdown {
+  font-size: @massive;
+}
+
+/* Dropdown Items */
+.ui.mini.form .field .dropdown .menu > .item {
+  font-size: @mini;
+}
+.ui.tiny.form .field .dropdown .menu > .item {
+  font-size: @tiny;
+}
+.ui.small.form .field .dropdown .menu > .item {
+  font-size: @small;
+}
+.ui.form .field .dropdown .menu > .item {
+  font-size: @medium;
+}
+.ui.large.form .field .dropdown .menu > .item {
+  font-size: @large;
+}
+.ui.big.form .field .dropdown .menu > .item {
+  font-size: @big;
+}
+.ui.huge.form .field .dropdown .menu > .item {
+  font-size: @huge;
+}
+.ui.massive.form .field .dropdown .menu > .item {
   font-size: @massive;
 }
 

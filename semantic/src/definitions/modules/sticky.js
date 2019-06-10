@@ -1,6 +1,6 @@
 /*!
- * # Semantic UI - Sticky
- * http://github.com/semantic-org/semantic-ui/
+ * # Fomantic-UI - Sticky
+ * http://github.com/fomantic/Fomantic-UI/
  *
  *
  * Released under the MIT license
@@ -10,7 +10,11 @@
 
 ;(function ($, window, document, undefined) {
 
-"use strict";
+'use strict';
+
+$.isFunction = $.isFunction || function(obj) {
+  return typeof obj === "function" && typeof obj.nodeType !== "number";
+};
 
 window = (typeof window != 'undefined' && window.Math == Math)
   ? window
@@ -53,7 +57,6 @@ $.fn.sticky = function(parameters) {
         $container,
         $context,
 
-        selector              = $module.selector || '',
         instance              = $module.data(moduleNamespace),
 
         requestAnimationFrame = window.requestAnimationFrame
@@ -237,8 +240,7 @@ $.fn.sticky = function(parameters) {
         supports: {
           sticky: function() {
             var
-              $element = $('<div/>'),
-              element = $element[0]
+              $element = $('<div/>')
             ;
             $element.addClass(className.supported);
             return($element.css('position').match('sticky'));
@@ -269,9 +271,6 @@ $.fn.sticky = function(parameters) {
               context = {
                 offset : $context.offset(),
                 height : $context.outerHeight()
-              },
-              container = {
-                height: $container.outerHeight()
               }
             ;
             if( !module.is.standardScroll() ) {
@@ -286,7 +285,8 @@ $.fn.sticky = function(parameters) {
               context.offset.left += scrollContext.left;
             }
             module.cache = {
-              fits : ( element.height < scrollContext.height ),
+              fits          : ( (element.height + settings.offset) <= scrollContext.height),
+              sameHeight    : (element.height == context.height),
               scrollContext : {
                 height : scrollContext.height
               },
@@ -305,7 +305,7 @@ $.fn.sticky = function(parameters) {
               }
             };
             module.set.containerSize();
-            module.set.size();
+
             module.stick();
             module.debug('Caching element positions', module.cache);
           }
@@ -373,6 +373,11 @@ $.fn.sticky = function(parameters) {
           },
           elementScroll: function(scroll) {
             delete module.elementScroll;
+          },
+          minimumSize: function() {
+            $container
+              .css('min-height', '')
+            ;
           },
           offset: function() {
             $module.css('margin-top', '');
@@ -467,6 +472,7 @@ $.fn.sticky = function(parameters) {
             cachedPosition = scroll || $scroll.scrollTop(),
             cache          = module.cache,
             fits           = cache.fits,
+            sameHeight     = cache.sameHeight,
             element        = cache.element,
             scrollContext  = cache.scrollContext,
             context        = cache.context,
@@ -477,7 +483,6 @@ $.fn.sticky = function(parameters) {
               top    : cachedPosition + offset,
               bottom : cachedPosition + offset + scrollContext.height
             },
-            direction      = module.get.direction(scroll.top),
             elementScroll  = (fits)
               ? 0
               : module.get.elementScroll(scroll.top),
@@ -486,8 +491,7 @@ $.fn.sticky = function(parameters) {
             doesntFit      = !fits,
             elementVisible = (element.height !== 0)
           ;
-
-          if(elementVisible) {
+          if(elementVisible && !sameHeight) {
 
             if( module.is.initialPosition() ) {
               if(scroll.top >= context.bottom) {
@@ -614,6 +618,9 @@ $.fn.sticky = function(parameters) {
 
         fixTop: function() {
           module.debug('Fixing element to top of page');
+          if(settings.setSize) {
+            module.set.size();
+          }
           module.set.minimumSize();
           module.set.offset();
           $module
@@ -632,6 +639,9 @@ $.fn.sticky = function(parameters) {
 
         fixBottom: function() {
           module.debug('Sticking element to bottom of page');
+          if(settings.setSize) {
+            module.set.size();
+          }
           module.set.minimumSize();
           module.set.offset();
           $module
@@ -663,6 +673,7 @@ $.fn.sticky = function(parameters) {
         unfix: function() {
           if( module.is.fixed() ) {
             module.debug('Removing fixed position on element');
+            module.remove.minimumSize();
             module.remove.offset();
             $module
               .removeClass(className.fixed)
@@ -839,7 +850,7 @@ $.fn.sticky = function(parameters) {
           else if(found !== undefined) {
             response = found;
           }
-          if($.isArray(returnedValue)) {
+          if(Array.isArray(returnedValue)) {
             returnedValue.push(response);
           }
           else if(returnedValue !== undefined) {
@@ -898,7 +909,11 @@ $.fn.sticky.settings = {
   // Offset to adjust scroll when attached to bottom of screen
   bottomOffset   : 0,
 
-  jitter         : 5, // will only set container height if difference between context and container is larger than this number
+  // will only set container height if difference between context and container is larger than this number
+  jitter         : 5,
+
+  // set width of sticky element when it is fixed to page (used to make sure 100% width is maintained if no fixed size set)
+  setSize        : true,
 
   // Whether to automatically observe changes with Mutation Observers
   observeChanges : false,

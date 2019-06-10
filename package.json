@@ -14,9 +14,10 @@
     "jquery": "^3.1.1",
     "laravel-mix": "^0.8.3",
     "lodash": "^4.17.4",
-    "vue": "^2.1.10"
+    "vue": "^2.1.10",
+    "gulp": "^3.9.1"
   },
   "dependencies": {
-    "semantic-ui": "^2.2.10"
+    "fomantic-ui": "^2.7.5"
   }
 }

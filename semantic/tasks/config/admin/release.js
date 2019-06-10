@@ -66,6 +66,7 @@ module.exports = {
     'breadcrumb',
     'button',
     'card',
+    'calendar',
     'checkbox',
     'comment',
     'container',
@@ -89,9 +90,11 @@ module.exports = {
     'message',
     'modal',
     'nag',
+    'placeholder',
     'popup',
     'progress',
     'rail',
+    'slider',
     'rating',
     'reset',
     'reveal',
@@ -105,6 +108,8 @@ module.exports = {
     'sticky',
     'tab',
     'table',
+    'text',
+    'toast',
     'transition',
     'visibility'
   ]

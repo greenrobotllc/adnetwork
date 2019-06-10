@@ -282,13 +282,7 @@ module.exports = {
         type    : 'list',
         name    : 'useRoot',
         message :
-          '    \n' +
-          '    {packageMessage} \n' +
-          '    \n' +
-          '    Is this your project folder?\n' +
-          '    \x1b[92m{root}\x1b[0m \n' +
-          '    \n ' +
-          '\n',
+          '{packageMessage} Is this your project folder? {root}',
         choices: [
           {
             name  : 'Yes',
@@ -339,7 +333,7 @@ module.exports = {
         when: when.allowOverwrite,
         choices: [
           {
-            name: 'Automatic (Use defaults locations and all components)',
+            name: 'Automatic (Use default locations and all components)',
             value: 'auto'
           },
           {
@@ -389,20 +383,25 @@ module.exports = {
           { name: "item", checked: true },
           { name: "statistic", checked: true },
           { name: "accordion", checked: true },
+          { name: "calendar", checked: true },
           { name: "checkbox", checked: true },
           { name: "dimmer", checked: true },
           { name: "dropdown", checked: true },
           { name: "embed", checked: true },
           { name: "modal", checked: true },
           { name: "nag", checked: true },
+          { name: "placeholder", checked: true },
           { name: "popup", checked: true },
           { name: "progress", checked: true },
+          { name: "slider", checked: true },
           { name: "rating", checked: true },
           { name: "search", checked: true },
           { name: "shape", checked: true },
           { name: "sidebar", checked: true },
           { name: "sticky", checked: true },
           { name: "tab", checked: true },
+          { name: "text", checked: true },
+          { name: "toast", checked: true },
           { name: "transition", checked: true },
           { name: "api", checked: true },
           { name: "form", checked: true },
