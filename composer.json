@@ -29,7 +29,7 @@
         "laravelista/ekko": "^1.3",
         "league/flysystem-aws-s3-v3": "^1.0",
         "torann/geoip": "^1.0",
-        "wangaz/laravel-semantic-ui-css": "^1.2",
+        "wangaz/laravel-semantic-ui-css": "1.3.0",
         "webpatser/laravel-uuid": "^2.0"
     },
     "require-dev": {
