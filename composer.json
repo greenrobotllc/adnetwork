@@ -35,7 +35,6 @@
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~6.0",
         "greenrobotllc/laravel-resourceful": "dev-master",
         "filp/whoops": "~2.0"
     },
