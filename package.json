@@ -19,6 +19,7 @@
     "vue": "^2.6.10"
   },
   "dependencies": {
+    "diff": "^4.0.1",
     "fomantic-ui": "^2.7.6"
   }
 }
