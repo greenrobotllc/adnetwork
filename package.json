@@ -15,7 +15,7 @@
     "gulp": "^4.0.2",
     "jquery": "^3.4.1",
     "laravel-mix": "^4.0.16",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.14",
     "vue": "^2.6.10"
   },
   "dependencies": {
