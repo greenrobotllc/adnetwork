@@ -21,11 +21,7 @@ class HomeController extends Controller
     }
 
 
-    public function welcome() {
-        return view('welcome');
 
-
-    }
     /**
      * Show the application dashboard.
      *

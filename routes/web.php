@@ -14,7 +14,6 @@
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/', 'HomeController@welcome');
 
 Auth::routes();
 
@@ -49,6 +48,8 @@ Route::resource('adcampaigns3', 'Adcampaigns3Controller');
 Route::resource('adcampaigns4', 'Adcampaigns4Controller');
 
 Route::resource('sites', 'SitesController');
+
+Route::get('/', 'WelcomeController@welcome');
 
 Route::get('ads/randomad', 'DisplayAdController@random')->name('random_ad');
 Route::get('admin', 'AdminController@index')->name('admin');
