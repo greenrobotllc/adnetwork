@@ -8,14 +8,14 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
+    "@hapi/cryptiles": ">=4.1.2",
     "axios": "^0.18.1",
     "bootstrap-sass": "^3.4.1",
     "cross-env": "^3.2.3",
-    "@hapi/cryptiles": ">=4.1.2",
     "gulp": "^4.0.2",
     "jquery": "^3.4.1",
     "laravel-mix": "^4.1.2",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.15",
     "vue": "^2.6.10"
   },
   "dependencies": {
