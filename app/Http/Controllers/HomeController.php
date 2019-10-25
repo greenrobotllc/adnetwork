@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+#use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 
 class HomeController extends Controller
 {
@@ -29,8 +29,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if(Input::get('start')) {
-            $reportStart =date('Y-m-d', strtotime(Input::get('start')));
+        if(Request::input('start')) {
+            $reportStart =date('Y-m-d', strtotime(Request::input('start')));
 
         }
         else {
@@ -38,8 +38,8 @@ class HomeController extends Controller
 
         }
 
-        if(Input::get('end')) {
-            $reportEnd =date('Y-m-d', strtotime(Input::get('end')));
+        if(Request::input('end')) {
+            $reportEnd =date('Y-m-d', strtotime(Request::input('end')));
         }
         else {
             $reportEnd = date('Y-m-d', time());

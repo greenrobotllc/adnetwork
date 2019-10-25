@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Campaign;
 use App\Ad;
 use App\CampaignCountryG;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use stdClass;
 use Storage;
@@ -17,6 +16,7 @@ use App\Http\Requests\CampaignRequest;
 use App\Block;
 use App\CampaignBlock;
 use App\TargetOnly;
+use Illuminate\Support\Facades\Request;
 
 class CampaignController extends Controller
 {
@@ -40,9 +40,9 @@ class CampaignController extends Controller
         $id = Auth::id();
         //echo "Your id: $id";
 
-        if(Input::get('start') && Input::get('end')) {
-            $reportStart =date('Y-m-d', strtotime(Input::get('start')));
-            $reportEnd =date('Y-m-d', strtotime(Input::get('end')));
+        if(Request::get('start') && Request::get('end')) {
+            $reportStart =date('Y-m-d', strtotime(Request::get('start')));
+            $reportEnd =date('Y-m-d', strtotime(Request::get('end')));
 
         }
         else {

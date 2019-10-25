@@ -9,8 +9,7 @@ use App\Http\Requests\SitesRequest;
 use stdClass;
 use Illuminate\Support\Facades\Auth;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\DB;
 
 class SitesController extends Controller {
@@ -32,9 +31,9 @@ class SitesController extends Controller {
     $user_id = Auth::id();
 
 
-        if(Input::get('start') && Input::get('end')) {
-            $reportStart =date('Y-m-d', strtotime(Input::get('start')));
-            $reportEnd =date('Y-m-d', strtotime(Input::get('end')));
+        if(Request::get('start') && Request::get('end')) {
+            $reportStart =date('Y-m-d', strtotime(Request::get('start')));
+            $reportEnd =date('Y-m-d', strtotime(Request::get('end')));
 
         }
         else {

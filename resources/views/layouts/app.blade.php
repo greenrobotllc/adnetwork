@@ -124,21 +124,21 @@ input:checked + .slider:before {
           <?php if(Auth::check()) { ?>
           <div >
             <ul class="nav nav-tabs" style="float:right">
-              <li role="presentation" class="{{ isActiveURL('/home') }}">
+              <li role="presentation" class="{{ Ekko::isActive('/home') }}">
                 <a href="/home">HOME</a>
               </li>
-              <li role="presentation" class="{{ isActiveURL('/campaigns') }}">
+              <li role="presentation" class="{{ Ekko::isActive('/campaigns') }}">
                 <a href="{{ url('/campaigns') }}">ADVERTISER CAMPAIGNS</a>
               </li>
-              <li role="presentation"  class="{{ isActiveURL('/sites') }}">
+              <li role="presentation"  class="{{ Ekko::isActive('/sites') }}">
                 <a href="{{ url('/sites') }}">PUBLISHER SITES / APPS</a>
               </li>
-              <li role="presentation"  class="{{ isActiveURL('/account') }}">
+              <li role="presentation"  class="{{ Ekko::isActive('/account') }}">
                 <a href="{{ url('/account') }}">ACCOUNT</a>
               </li>
               <?php if(Auth::id() == env('ADMIN_ID', 'ADMIN_ID')) { 
               ?>
-              <li role="presentation"  class="{{ isActiveURL('/admin') }}">
+              <li role="presentation"  class="{{ Ekko::isActive('/admin') }}">
                 <a href="{{ url('/admin') }}">ADMIN</a>
               </li>
 
@@ -146,107 +146,107 @@ input:checked + .slider:before {
               }
               ?>
 
-              @if(isActiveURL('/campaigns/create', true))
-              <li role="presentation"  class="{{ isActiveURL('/campaigns/create') }}">
+              @if(Ekko::isActive('/campaigns/create', true))
+              <li role="presentation"  class="{{ Ekko::isActive('/campaigns/create') }}">
                 <a href="{{ url('/campaigns/create') }}">CREATE CAMPAIGN</a>
               </li>
               @endif
 
-               @if(isActiveURL('/widget/create', true))
-              <li role="presentation"  class="{{ isActiveURL('/widget/create') }}">
+               @if(Ekko::isActive('/widget/create', true))
+              <li role="presentation"  class="{{ Ekko::isActive('/widget/create') }}">
                 <a href="{{ url('/campaigns/create') }}">CREATE WIDGET</a>
               </li>
               @endif
 
-              @if(isActiveURL('/sites/create', true))
-              <li role="presentation"  class="{{ isActiveURL('/sites/create') }}">
+              @if(Ekko::isActive('/sites/create', true))
+              <li role="presentation"  class="{{ Ekko::isActive('/sites/create') }}">
                 <a href="{{ url('/sites/create') }}">ADD SITE OR APP</a>
               </li>
               @endif
 
-     <!--         @if(isActiveRoute('campaigns.show', true))
+     <!--         @if(Ekko::isActiveRoute('campaigns.show', true))
              
-              <li role="presentation"  class="{{ isActiveRoute('campaigns.show') }}">
+              <li role="presentation"  class="{{ Ekko::isActiveRoute('campaigns.show') }}">
                 <a href="#">CAMPAIGN DETAILS</a>
               </li>
               @endif -->
 
 
-             @if(isActiveRoute('sites.show', true))
+             @if(Ekko::isActiveRoute('sites.show', true))
              
-              <li role="presentation"  class="{{ isActiveRoute('sites.show') }}">
+              <li role="presentation"  class="{{ Ekko::isActiveRoute('sites.show') }}">
                 <a href="#">SITE/APP PERFORMANCE</a>
               </li>
               @endif
 
 
 
-             @if(isActiveRoute('ads.show', true))
+             @if(Ekko::isActiveRoute('ads.show', true))
              
-              <li role="presentation"  class="{{ isActiveRoute('ads.show') }}">
+              <li role="presentation"  class="{{ Ekko::isActiveRoute('ads.show') }}">
                 <a href="#">AD DETAIL</a>
               </li>
               @endif
 
 
-            @if(isActiveRoute('widgets.show', true))
+            @if(Ekko::isActiveRoute('widgets.show', true))
              
-              <li role="presentation"  class="{{ isActiveRoute('widgets.show') }}">
+              <li role="presentation"  class="{{ Ekko::isActiveRoute('widgets.show') }}">
                 <a href="#">WIDGET DETAILS</a>
               </li>
               @endif
 
 
 
-             @if(isActiveRoute('campaigns.show', true))
-              <li role="presentation"  class="{{ isActiveRoute('campaigns.show') }}">
+             @if(Ekko::isActiveRoute('campaigns.show', true))
+              <li role="presentation"  class="{{ Ekko::isActiveRoute('campaigns.show') }}">
                 <a href="#">CAMPAIGN PERFORMANCE</a>
               </li>
               @endif
 
-              @if(isActiveRoute('campaign_content', true))
-              <li role="presentation"  class="{{ isActiveRoute('campaign_content') }}">
+              @if(Ekko::isActiveRoute('campaign_content', true))
+              <li role="presentation"  class="{{ Ekko::isActiveRoute('campaign_content') }}">
                 <a href="#">CAMPAIGN CONTENT</a>
               </li>
               @endif
 
-             @if(isActiveRoute('campaign_settings', true))
-              <li role="presentation"  class="{{ isActiveRoute('campaign_settings') }}">
+             @if(Ekko::isActiveRoute('campaign_settings', true))
+              <li role="presentation"  class="{{ Ekko::isActiveRoute('campaign_settings') }}">
                 <a href="#">CAMPAIGN SETTINGS</a>
               </li>
               @endif
 
 
-              @if(isActiveRoute('site_content', true))
-              <li role="presentation"  class="{{ isActiveRoute('site_content') }}">
+              @if(Ekko::isActiveRoute('site_content', true))
+              <li role="presentation"  class="{{ Ekko::isActiveRoute('site_content') }}">
                 <a href="#">SITE CONTENT</a>
               </li>
               @endif
 
-             @if(isActiveRoute('site_settings', true))
-              <li role="presentation"  class="{{ isActiveRoute('site_settings') }}">
+             @if(Ekko::isActiveRoute('site_settings', true))
+              <li role="presentation"  class="{{ Ekko::isActiveRoute('site_settings') }}">
                 <a href="#">SITE SETTINGS</a>
               </li>
               @endif
 
 
-             @if(isActiveRoute('ads.create', true))
+             @if(Ekko::isActiveRoute('ads.create', true))
              
-              <li role="presentation"  class="{{ isActiveRoute('ads.create') }}">
+              <li role="presentation"  class="{{ Ekko::isActiveRoute('ads.create') }}">
                 <a href="#">CREATE AD</a>
               </li>
               @endif
 			  
-              @if(isActiveRoute('site_targeting', true))
+              @if(Ekko::isActiveRoute('site_targeting', true))
              
-               <li role="presentation"  class="{{ isActiveRoute('site_targeting') }}">
+               <li role="presentation"  class="{{ Ekko::isActiveRoute('site_targeting') }}">
                  <a href="#">SITE TARGETING</a>
                </li>
                @endif
 
-                @if(isActiveRoute('campaign_targeting', true))
+                @if(Ekko::isActiveRoute('campaign_targeting', true))
              
-               <li role="presentation"  class="{{ isActiveRoute('campaign_targeting') }}">
+               <li role="presentation"  class="{{ Ekko::isActiveRoute('campaign_targeting') }}">
                  <a href="#">CAMPAIGN TARGETING</a>
                </li>
                @endif

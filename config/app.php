@@ -177,7 +177,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         'Collective\Html\HtmlServiceProvider',
-         Laravelista\Ekko\EkkoServiceProvider::class,
+         // Laravelista\Ekko\EkkoServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
           \Torann\GeoIP\GeoIPServiceProvider::class,
           Cartalyst\Stripe\Laravel\StripeServiceProvider::class,
