@@ -78,14 +78,6 @@ having sites.user_id = :user_id_2 and sites.id not in (select sites.id id from `
 
  ));
 
-//print_r($results);
-//$reports = DB::table('sites' )
-      //             ->leftJoin('daily_ad_unit_reports', 'daily_ad_unit_reports.site_id', '=', 'sites.id' )
-      //                ->select(DB::raw('sites.name name, sites.platform, sites.url, sites.approval_status, site_id id, sum(impressions) impressions, sum(clicks) clicks, round(sum(total_costd) * .70) total_cost'))
-      //                ->where('publisher_user_id', '=', $user_id)
-      //                ->groupBy('site_id')
-      //                ->get();
-                     //print_r($reports);
 
 		return view('sites.index', compact('sites', 'reports'));
 	}
@@ -98,42 +90,14 @@ having sites.user_id = :user_id_2 and sites.id not in (select sites.id id from `
 	 */
 	public function show($id)
 	{
-
-    //dd($id);
-		// $date = Date('Y-m-d');
-
-
-  //       $reportDate =Input::get('date');
-   
-
-
-  //       $date = Date('Y-m-d');
-  //       if($reportDate == "yesterday") {
-  //           $date = Date('Y-m-d', strtotime( '-1 days' ));
-  //           $to=$date;
-  //           $from=$date;
-  //       }
-  //       else if($reportDate == "this_month") {
-  //           $from=Date('Y-m-01');
-  //           $to = Date('Y-m-d');
-  //       }
-  //       else if($reportDate == "last_month") {
-  //           $from=Date('Y-m-d', strtotime('first day of previous month'));
-  //           $to = Date('Y-m-d', strtotime('last day of previous month'));
-  //       }
-  //       else {
-  //           //this month
-  //           $from=Date('Y-m-01');
-  //           $to = Date('Y-m-d');
-
-  //       }
+		
 
     $site = Sites::findOrFail($id);
     //dd($site);
 
-        if(Input::get('start') && Input::get('end')) {
-            $reportStart =date('Y-m-d', strtotime(Input::get('start')));
-            $reportEnd =date('Y-m-d', strtotime(Input::get('end')));
+        if(Request::get('start') && Request::get('end')) {
+            $reportStart =date('Y-m-d', strtotime(Request::get('start')));
+            $reportEnd =date('Y-m-d', strtotime(Request::get('end')));
 
         }
         else {
@@ -179,7 +143,6 @@ $reports = DB::table('daily_ad_unit_reports')
         $site->url="";
         $site->platform="";
 
-     	//$sid =Input::get('sid');
      	$site->id="";
 		return view('sites.create', compact('site'));
 	}
@@ -228,35 +191,10 @@ $reports = DB::table('daily_ad_unit_reports')
 		// $date = Date('Y-m-d');
 
 
-  //       $reportDate =Input::get('date');
-   
 
-
-  //       $date = Date('Y-m-d');
-  //       if($reportDate == "yesterday") {
-  //           $date = Date('Y-m-d', strtotime( '-1 days' ));
-  //           $to=$date;
-  //           $from=$date;
-  //       }
-  //       else if($reportDate == "this_month") {
-  //           $from=Date('Y-m-01');
-  //           $to = Date('Y-m-d');
-  //       }
-  //       else if($reportDate == "last_month") {
-  //           $from=Date('Y-m-d', strtotime('first day of previous month'));
-  //           $to = Date('Y-m-d', strtotime('last day of previous month'));
-  //       }
-  //       else {
-  //           //this month
-  //           $from=Date('Y-m-01');
-  //           $to = Date('Y-m-d');
-
-  //       }
-
-
-        if(Input::get('start') && Input::get('end')) {
-            $reportStart =date('Y-m-d', strtotime(Input::get('start')));
-            $reportEnd =date('Y-m-d', strtotime(Input::get('end')));
+        if(Request::get('start') && Request::get('end')) {
+            $reportStart =date('Y-m-d', strtotime(Request::get('start')));
+            $reportEnd =date('Y-m-d', strtotime(Request::get('end')));
 
         }
         else {

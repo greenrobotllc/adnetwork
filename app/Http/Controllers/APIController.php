@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\User;
@@ -15,16 +13,16 @@ class APIController extends Controller
 
     	// $id = Auth::id();
     	// if(!)
-    	$date = Input::get("date");
+    	$date = Request::get("date");
     	if(!$date) {
 			die("no date parameter");
 		}
-    	$publisher_user_id = Input::get("user_id");
+    	$publisher_user_id = Request::get("user_id");
     	if(!$publisher_user_id) {
     		die("no user_id parameter");
     	}
 
-    	$publisher_api_key =Input::get('publisher_api_key');
+    	$publisher_api_key =Request::get('publisher_api_key');
 
         //check if pub api key matches user
         $user = User::findOrFail($publisher_user_id);

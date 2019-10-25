@@ -12,8 +12,7 @@ use App\DailyAdUnitReport;
 use App\Http\Requests\AdsRequest;
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
 use Jenssegers\Agent\Agent;
 
@@ -39,7 +38,6 @@ class AdController extends Controller {
 
 
     public function ajax_enable($c) {
-        //$cid =Input::get('cid');
         $ad = Ad::findOrFail($c);
         //$ads = Ad::where('campaign_id', $campaign->id)->get();
         //print_r($ads);
@@ -53,7 +51,6 @@ class AdController extends Controller {
     }
     
     public function ajax_disable($c) {
-        //$cid =Input::get('cid');
         $ad = Ad::findOrFail($c);
         // $ads = Ad::where('campaign_id', $campaign->id)->get();
         // print_r($ads);
@@ -94,9 +91,8 @@ class AdController extends Controller {
 	public function create()
 	{
 
-		        //$term = Input::get('term', false);
 
-		$cid =Input::get('cid');
+		$cid =Request::get('cid');
 		$campaign = Campaign::findOrFail($cid);
 		$ad = new \stdClass();
 		$ad->campaign_id=$cid;

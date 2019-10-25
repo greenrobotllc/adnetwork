@@ -56,10 +56,6 @@ class CampaignController extends Controller
         }
 
 
-
-    //$wid =Input::get('wid');
-        //$widget = Widget::findOrFail($wid);
-        //$publisher_id = $widget->user_id;
             $advertiser_user_id=Auth::id();
              $advertiser_user = User::findOrFail($advertiser_user_id);
 
@@ -102,42 +98,8 @@ class CampaignController extends Controller
                 }
             }
          }
-
-        //$campaigns = Campaign::all();
-        // $campaigns = Ad::where('user_id', $advertiser_user_id)->get();
-
-        //$reportStart =Input::get('start');
-        //print_r($reportStart);
-
-        // $date = Date('Y-m-d');
-        // if($reportDate == "yesterday") {
-        //     $date = Date('Y-m-d', strtotime( '-1 days' ));
-        //     $to=$date;
-        //     $from=$date;
-        // }
-        // else if($reportDate == "today") {
-        //     $date = Date('Y-m-d');
-        //     $to=$date;
-        //     $from=$date;
-        // }
-        // else if($reportDate == "this_month") {
-        //     $from=Date('Y-m-01');
-        //     $to = Date('Y-m-d');
-        // }
-        // else if($reportDate == "last_month") {
-        //     $from=Date('Y-m-d', strtotime('first day of previous month'));
-        //     $to = Date('Y-m-d', strtotime('last day of previous month'));
-        // }
-        // else {
-        //     //today
-        //     $date = Date('Y-m-d');
-        //     $to=$date;
-        //     $from=$date; 
-
-        // }
-        
-        //print_r($reportStart);
-        //echo "Today is " . date("Y/m/d", time()) . "<br>";
+		 
+		 
         foreach($campaigns as $campaign) {
                 $impressions = DB::table('daily_ad_unit_reports')
                 ->whereBetween('report_date', array($reportStart, $reportEnd))
@@ -203,41 +165,12 @@ class CampaignController extends Controller
         $campaign = Campaign::findOrFail($id);
 
 
-        // $reportDate =Input::get('date');
 
-        // $date = Date('Y-m-d');
-        // if($reportDate == "yesterday") {
-        //     $date = Date('Y-m-d', strtotime( '-1 days' ));
-        //     $to=$date;
-        //     $from=$date;
-        // }
-        // else if($reportDate == "today") {
-        //     $from= Date('Y-m-d');
-
-        //     $to = Date('Y-m-d');
-        // }
-        // else if($reportDate == "this_month") {
-        //     $from=Date('Y-m-01');
-        //     $to = Date('Y-m-d');
-        // }
-        // else if($reportDate == "last_month") {
-        //     $from=Date('Y-m-d', strtotime('first day of previous month'));
-        //     $to = Date('Y-m-d', strtotime('last day of previous month'));
-        // }
-        // else {
-        //     //this month
-        //     $from=Date('Y-m-01');
-        //     $to = Date('Y-m-d');
-
-        // }
-
-        //print_r($from);
-        //print_r($to);
         $ads = Ad::all()->where('campaign_id', $id);
 
-        if(Input::get('start') && Input::get('end')) {
-            $reportStart =date('Y-m-d', strtotime(Input::get('start')));
-            $reportEnd =date('Y-m-d', strtotime(Input::get('end')));
+        if(Request::get('start') && Request::get('end')) {
+            $reportStart =date('Y-m-d', strtotime(Request::get('start')));
+            $reportEnd =date('Y-m-d', strtotime(Request::get('end')));
 
         }
         else {
@@ -288,7 +221,6 @@ class CampaignController extends Controller
 
 
     public function ajax_enable($c) {
-        //$cid =Input::get('cid');
         $campaign = Campaign::findOrFail($c);
         $ads = Ad::where('campaign_id', $campaign->id)->get();
         //print_r($ads);
@@ -302,7 +234,6 @@ class CampaignController extends Controller
     }
     
     public function ajax_disable($c) {
-        //$cid =Input::get('cid');
         $campaign = Campaign::findOrFail($c);
         $ads = Ad::where('campaign_id', $campaign->id)->get();
         print_r($ads);
@@ -493,9 +424,7 @@ class CampaignController extends Controller
     }
 
     public function targeting($id) {
-        //return "targeting";
-        //$site = Sites::findOrFail($id);
-        $blacklist_or_targetonly =Input::get('blacklist_or_targetonly');
+        $blacklist_or_targetonly =Request::get('blacklist_or_targetonly');
         if($blacklist_or_targetonly) {
             //dd($blacklist_or_targetonly);
             if($blacklist_or_targetonly == "blacklist") {
@@ -558,40 +487,11 @@ class CampaignController extends Controller
      */
     public function show(Campaign $campaign)
     {
-        //
-
-        //dd($campaign);
-        // $reportDate =Input::get('date');
-   
 
 
-        // $date = Date('Y-m-d');
-        // if($reportDate == "yesterday") {
-        //     $date = Date('Y-m-d', strtotime( '-1 days' ));
-        //     $to=$date;
-        //     $from=$date;
-        // }
-        // else if($reportDate == "this_month") {
-        //     $from=Date('Y-m-01');
-        //     $to = Date('Y-m-d');
-        // }
-        // else if($reportDate == "last_month") {
-        //     $from=Date('Y-m-d', strtotime('first day of previous month'));
-        //     $to = Date('Y-m-d', strtotime('last day of previous month'));
-        // }
-        // else {
-        //     //this month
-        //     $from=Date('Y-m-01');
-        //     $to = Date('Y-m-d');
-
-        // }
-
-
-       // dd($campaign->id);
-
-        if(Input::get('start') && Input::get('end')) {
-            $reportStart =date('Y-m-d', strtotime(Input::get('start')));
-            $reportEnd =date('Y-m-d', strtotime(Input::get('end')));
+        if(Request::get('start') && Request::get('end')) {
+            $reportStart =date('Y-m-d', strtotime(Request::get('start')));
+            $reportEnd =date('Y-m-d', strtotime(Request::get('end')));
 
         }
         else {

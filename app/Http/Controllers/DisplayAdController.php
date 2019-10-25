@@ -54,7 +54,7 @@ class DisplayAdController extends Controller
 		//dd($g->getLocation()['iso_code']);
 		$iso = strtolower($g->getLocation()['iso_code']);
 		//echo $iso;
-		$wid =Input::get('wid');
+		$wid =Request::get('wid');
 		$widget = Widget::findOrFail($wid);
 		//$publisher_id = $widget->user_id;
 			$advertiser_user_id=$widget->user_id;
@@ -263,10 +263,10 @@ select * from ads where status = 'approved' and whitelist_only=1 and campaign_st
 
 
 	public function click() {
-		$url =Input::get('url');
+		$url =Request::get('url');
 		//print_r($url);
-		$widget_id =Input::get('wid');
-		$ad_id =Input::get('aid');
+		$widget_id =Request::get('wid');
+		$ad_id =Request::get('aid');
 		//todo increment clicks
 		$ad = Ad::findOrFail($ad_id);
 		$widget = Widget::findOrFail($widget_id);

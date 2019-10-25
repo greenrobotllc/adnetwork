@@ -5,10 +5,8 @@ use App\Http\Controllers\Controller;
 use App\Widget;
 use App\Sites;
 use App\Http\Requests\WidgetRequest;
-
-use Illuminate\Http\Request;
 use stdClass;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
 
 class WidgetController extends Controller {
@@ -53,7 +51,7 @@ class WidgetController extends Controller {
 	{
 		$widget= new stdClass();
      	$widget->name = "";
-     	$sid =Input::get('sid');
+     	$sid =Request::get('sid');
 		$site = Sites::findOrFail($sid);
 
 
@@ -69,7 +67,7 @@ class WidgetController extends Controller {
 	public function store(WidgetRequest $request)
 	{
 		$request['user_id']=  Auth::id();
-     	$sid =Input::get('sid');
+     	$sid =Request::get('sid');
      	//return $sid;
      	$request['site_id']=$sid;
 		Widget::create($request->all());
