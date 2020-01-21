@@ -25,4 +25,4 @@ php composer.phar install
 # FAQ
 Question: How to access admin panel? What is login or password?
 
-Answer: First, register as a new user. Then add the uid of the admin user to the ADMIN_ID variable in your .env. Get the uid from the database.
+Answer: First, register as a new user. Then add the uid of the admin user to the ADMIN_ID variable in your .env. Get the uid from the database. Then clear the cache: https://tecadmin.net/clear-cache-laravel-5/
