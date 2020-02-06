@@ -21,6 +21,9 @@ php artisan key:generate
 -Run:
 php composer.phar install
 
+# Requirements
+
+-php 7.2 or greater.
 
 # FAQ
 Question: How to access admin panel? What is login or password?
