@@ -493,6 +493,8 @@ class CampaignController extends Controller
 
         // ->get();
 
+        $cost = 0;
+        
         foreach ($reports as $report) {
             $cost= DB::table('clicks')
                 ->where('click_date', $report->report_date)
