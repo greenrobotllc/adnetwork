@@ -29,3 +29,9 @@ php composer.phar install
 Question: How to access admin panel? What is login or password?
 
 Answer: First, register as a new user. Then add the uid of the admin user to the ADMIN_ID variable in your .env. Get the uid from the database. Then clear the cache: https://tecadmin.net/clear-cache-laravel-5/
+
+Question: How do I display erorrs in development?
+In your .env file, set APP_DEBUG to true.
+
+Question: How do I turn off the display of erorrs in production?
+In your .env file, set APP_DEBUG to false.
