@@ -40,37 +40,32 @@ class CampaignController extends Controller
         $id = Auth::id();
         //echo "Your id: $id";
 
-        if(Request::get('start') && Request::get('end')) {
+        if (Request::get('start') && Request::get('end')) {
             $reportStart =date('Y-m-d', strtotime(Request::get('start')));
             $reportEnd =date('Y-m-d', strtotime(Request::get('end')));
-
-        }
-        else {
+        } else {
             $reportStart = date('Y-m-d', time());
             $reportEnd =date('Y-m-d', time());
 
-            return redirect()->action( 'CampaignController@index', ['start' => $reportStart, 'end' => $reportEnd]);
-            
-            
-
+            return redirect()->action('CampaignController@index', ['start' => $reportStart, 'end' => $reportEnd]);
         }
 
 
-            $advertiser_user_id=Auth::id();
-             $advertiser_user = User::findOrFail($advertiser_user_id);
+        $advertiser_user_id=Auth::id();
+        $advertiser_user = User::findOrFail($advertiser_user_id);
 
-        if($advertiser_user->advertiser_balance < 100) {
-             //echo("under");
+        if ($advertiser_user->advertiser_balance < 100) {
+            //echo("under");
             //disable all advertiser's ads and campaigns
             $campaigns = Campaign::where('user_id', $advertiser_user_id)->get();
-            foreach($campaigns as $campaign) {
+            foreach ($campaigns as $campaign) {
                 //$campaign->enabled = 0;
                 $campaign->status="account_low_funds";
                 $campaign->save();
 
                 $ads = Ad::where('campaign_id', $campaign->id)->get();
                 //dd($ads);
-                foreach($ads as $ad) {
+                foreach ($ads as $ad) {
                     $ad->campaign_status="account_low_funds";
 
                     //$ad->campaign_enabled = 0;
@@ -79,51 +74,48 @@ class CampaignController extends Controller
             }
 
             //dd($campaigns);
-         }
-         else {
-
+        } else {
             $campaigns = Campaign::where('user_id', $advertiser_user_id)->get();
-            foreach($campaigns as $campaign) {
+            foreach ($campaigns as $campaign) {
                 //$campaign->enabled = 0;
                 $campaign->status="active";
                 $campaign->save();
 
                 $ads = Ad::where('campaign_id', $campaign->id)->get();
                 //dd($ads);
-                foreach($ads as $ad) {
+                foreach ($ads as $ad) {
                     $ad->campaign_status="active";
 
                     //$ad->campaign_enabled = 0;
                     $ad->save();
                 }
             }
-         }
-		 
-		 
-        foreach($campaigns as $campaign) {
-                $impressions = DB::table('daily_ad_unit_reports')
+        }
+         
+         
+        foreach ($campaigns as $campaign) {
+            $impressions = DB::table('daily_ad_unit_reports')
                 ->whereBetween('report_date', array($reportStart, $reportEnd))
                 ->where('campaign_id', $campaign->id)
                 ->sum('impressions');
-                $clicks = DB::table('daily_ad_unit_reports')
+            $clicks = DB::table('daily_ad_unit_reports')
                 ->whereBetween('report_date', array($reportStart, $reportEnd))
                 ->where('campaign_id', $campaign->id)
                 ->sum('clicks');
 
-                $cost= DB::table('clicks')
+            $cost= DB::table('clicks')
                 ->whereBetween('click_date', array($reportStart, $reportEnd))
                 ->where('campaign_id', $campaign->id)
                 ->sum('cost');
-                ///print_r($cost);
-                //print_r($campaign);
-                //die();
-                $campaign->cost=$cost/100;
-                $campaign->budget_amount = $campaign->budget_amount/100;
-                $campaign->impressions=$impressions;              
-                $campaign->clicks=$clicks;              
+            ///print_r($cost);
+            //print_r($campaign);
+            //die();
+            $campaign->cost=$cost/100;
+            $campaign->budget_amount = $campaign->budget_amount/100;
+            $campaign->impressions=$impressions;
+            $campaign->clicks=$clicks;
         }
         return view('campaigns/index', compact('campaigns'));
-
     }
 
 
@@ -133,10 +125,12 @@ class CampaignController extends Controller
      * @return Response
      */
     public function settings($id)
-    
     {
         $campaign = Campaign::findOrFail($id);
-
+        $user_id = Auth::id();
+        if ($campaign->user_id != $user_id) {
+            exit("Not authorized");
+        }
         //print_r($campaign->start_date);
         
         //$id = Auth::id();
@@ -156,62 +150,57 @@ class CampaignController extends Controller
      * @return Response
      */
     public function content($id)
-    
     {
         //return Storage::disk('s3')->url($filename);
         //$id = Auth::id();
 
         //$adcampaigns4 = Adcampaigns4::create(["user_id" > $id]);
         $campaign = Campaign::findOrFail($id);
-
+        $user_id = Auth::id();
+        if ($campaign->user_id != $user_id) {
+            exit("Not authorized");
+        }
 
 
         $ads = Ad::all()->where('campaign_id', $id);
 
-        if(Request::get('start') && Request::get('end')) {
+        if (Request::get('start') && Request::get('end')) {
             $reportStart =date('Y-m-d', strtotime(Request::get('start')));
             $reportEnd =date('Y-m-d', strtotime(Request::get('end')));
-
-        }
-        else {
+        } else {
             $reportStart = date('Y-m-d', time());
             $reportEnd =date('Y-m-d', time());
 
-            return redirect()->action( 'CampaignController@content', ['start' => $reportStart, 'end' => $reportEnd, 'id'=>$campaign->id]);
-            
-            
-
+            return redirect()->action('CampaignController@content', ['start' => $reportStart, 'end' => $reportEnd, 'id'=>$campaign->id]);
         }
 
         $from = $reportStart;
         $to=$reportEnd;
 
-        foreach($ads as $ad) {
-                $impressions = DB::table('daily_ad_unit_reports')
+        foreach ($ads as $ad) {
+            $impressions = DB::table('daily_ad_unit_reports')
                 ->whereBetween('report_date', array($from, $to))
                 ->where('ad_unit_id', $ad->id)
                 ->sum('impressions');
-                $ad->impressions=$impressions; 
+            $ad->impressions=$impressions;
 
-                $impressions = DB::table('daily_ad_unit_reports')
+            $impressions = DB::table('daily_ad_unit_reports')
                 ->whereBetween('report_date', array($from, $to))
                 ->where('ad_unit_id', $ad->id)
                 ->sum('impressions');
-                $clicks = DB::table('daily_ad_unit_reports')
+            $clicks = DB::table('daily_ad_unit_reports')
                 ->whereBetween('report_date', array($from, $to))
                 ->where('ad_unit_id', $ad->id)
                 ->sum('clicks');
 
-                $cost= DB::table('clicks')
+            $cost= DB::table('clicks')
                 ->whereBetween('click_date', array($from, $to))
                 ->where('widget_id', $ad->id)
                 ->sum('cost');
-                ///print_r($cost);
-                $ad->cost=$cost/100;
-                $ad->impressions=$impressions;              
-                $ad->clicks=$clicks;            
-
-
+            ///print_r($cost);
+            $ad->cost=$cost/100;
+            $ad->impressions=$impressions;
+            $ad->clicks=$clicks;
         }
 
         return view('campaigns.content', compact('campaign', 'ads'));
@@ -220,11 +209,16 @@ class CampaignController extends Controller
 
 
 
-    public function ajax_enable($c) {
+    public function ajax_enable($c)
+    {
         $campaign = Campaign::findOrFail($c);
+        $user_id = Auth::id();
+        if ($campaign->user_id != $user_id) {
+            exit("Not authorized");
+        }
         $ads = Ad::where('campaign_id', $campaign->id)->get();
         //print_r($ads);
-        foreach($ads as $ad) {
+        foreach ($ads as $ad) {
             $ad->campaign_enabled=1;
             $ad->save();
         }
@@ -233,11 +227,16 @@ class CampaignController extends Controller
         echo("enabled");
     }
     
-    public function ajax_disable($c) {
+    public function ajax_disable($c)
+    {
         $campaign = Campaign::findOrFail($c);
+        $user_id = Auth::id();
+        if ($campaign->user_id != $user_id) {
+            exit("Not authorized");
+        }
         $ads = Ad::where('campaign_id', $campaign->id)->get();
         print_r($ads);
-        foreach($ads as $ad) {
+        foreach ($ads as $ad) {
             $ad->campaign_enabled=0;
             $ad->save();
         }
@@ -296,50 +295,41 @@ class CampaignController extends Controller
         $req=$request->all();
        
         $req['user_id']=  Auth::id();
-        if(isset($req['optradio'])) {
-            if($req['optradio'] == 'specific') {
+        if (isset($req['optradio'])) {
+            if ($req['optradio'] == 'specific') {
                 $originalDate = $req['datepicker'];
                 $newDate = date('Y-m-d H:i:s', strtotime($originalDate));
                 //print_r($newDate);
                 //print_r($newDate->format('Y-m-d H:i:s'));
                 $req['start_date'] = $newDate;
-            }
-            else {
+            } else {
                 $req['start_date']=date('Y-m-d H:i:s');
-
             }
         }
-        if(isset($req['optradio2'])) {
-            if($req['optradio2'] == 'specific') {
-
+        if (isset($req['optradio2'])) {
+            if ($req['optradio2'] == 'specific') {
                 $originalDate = $req['datepicker2'];
       
                 $newDate = date('Y-m-d H:i:s', strtotime($originalDate));
        
                 $req['end_date'] = $newDate;
-      
-            }
-            else {
+            } else {
                 $req['end_date']=null;
-
             }
         }
 
         // print_r($req);
         //die();
 
-        if($req['optradiocountry'] == "all") {
+        if ($req['optradiocountry'] == "all") {
             $req['all_countries']=1;
-        }
-        else {
+        } else {
             $req['all_countries']=0;
         }
 
-        if($req['optradiodevices'] == "specific") {
+        if ($req['optradiodevices'] == "specific") {
             $req['all_devices']=0;
-
-        }
-        else {
+        } else {
             $req['all_devices']=1;
             $req['desktop']=1;
             $req['mobile']=1;
@@ -350,66 +340,56 @@ class CampaignController extends Controller
             $req['optradioos']=1;
         }
 
-        if(isset($req['desktop'])) {
+        if (isset($req['desktop'])) {
             $req['desktop_enabled']=1;
-        }
-        else {
+        } else {
             $req['desktop_enabled']=0;
         }
         
-        if(isset($req['mobile'])) {
+        if (isset($req['mobile'])) {
             $req['mobile_enabled']=1;
-        }
-        else {
+        } else {
             $req['mobile_enabled']=0;
         }
 
-        if(isset($req['tablet']) ) {
+        if (isset($req['tablet'])) {
             $req['tablet_enabled']=1;
-        }
-        else {
+        } else {
             $req['tablet_enabled']=0;
         }
 
 
-        if(isset($req['optradioos']) ) {
-
-            if($req['optradioos'] =='specific') {
+        if (isset($req['optradioos'])) {
+            if ($req['optradioos'] =='specific') {
                 $req['all_operating_systems']=0;
-
-            }
-            else {
+            } else {
                 $req['all_operating_systems']=1;
                 $req['android']=1;
                 $req['ios']=1;
             }
-            
-        } 
-        else { 
+        } else {
             $req['all_operating_systems']=0;
         }
         
 
-        if(isset($req['android'])) {
+        if (isset($req['android'])) {
             $req['android_enabled']=1;
-        }
-        else {
+        } else {
             $req['android_enabled']=0;
         }
 
-        if(isset($req['ios'])) {
+        if (isset($req['ios'])) {
             $req['ios_enabled']=1;
-        }
-        else {
+        } else {
             $req['ios_enabled']=0;
         }
         $req['bid_amount'] = $req['bid_amount'] * 100;
         $req['budget_amount'] = $req['budget_amount'] * 100;
         $req['bid_range_low']=$req['bid_amount'];
         $req['bid_range_high']=$req['bid_amount'];
-        $req['status']='no_ads';           
+        $req['status']='no_ads';
 
-        if((!isset($req['countries']) || $req['countries'] == null)) {
+        if ((!isset($req['countries']) || $req['countries'] == null)) {
             $req['countries'] = "all";
         }
 
@@ -423,17 +403,23 @@ class CampaignController extends Controller
         return redirect('/campaigns');
     }
 
-    public function targeting($id) {
+    public function targeting($id)
+    {
+        $campaign = Campaign::findOrFail($id);
+        $user_id = Auth::id();
+        if ($campaign->user_id != $user_id) {
+            exit("Not authorized");
+        }
         $blacklist_or_targetonly =Request::get('blacklist_or_targetonly');
-        if($blacklist_or_targetonly) {
+        if ($blacklist_or_targetonly) {
             //dd($blacklist_or_targetonly);
-            if($blacklist_or_targetonly == "blacklist") {
-               //print("hi");
+            if ($blacklist_or_targetonly == "blacklist") {
+                //print("hi");
                 $campaign = Campaign::findOrFail($id);
                 $campaign->whitelist_only=0;
                 $ads = Ad::where('campaign_id', '=', $id)->get();
-                 //dd($ads);
-                foreach($ads as $ad) {
+                //dd($ads);
+                foreach ($ads as $ad) {
                     //dd($ad);
                     $ad->whitelist_only=0;
                     $ad->save();
@@ -441,13 +427,12 @@ class CampaignController extends Controller
                 $campaign->save();
                 $blocks = CampaignBlock::where('campaign_id', '=', $id)->get();
                 return view('campaigns.targeting', compact('campaign', 'blocks'));
-            }
-            else if($blacklist_or_targetonly== "targetonly") {
+            } elseif ($blacklist_or_targetonly== "targetonly") {
                 //echo "ok";//targeting.targetonly.blade.php
                 $campaign = Campaign::findOrFail($id);
-                $campaign->whitelist_only=1; 
+                $campaign->whitelist_only=1;
                 $ads = Ad::where('campaign_id', '=', $id)->get();
-                foreach($ads as $ad) {
+                foreach ($ads as $ad) {
                     $ad->whitelist_only=1;
                     $ad->save();
                 }
@@ -455,27 +440,20 @@ class CampaignController extends Controller
                 $targetonly = TargetOnly::where('campaign_id', '=', $id)->get();
                 
                 return view('campaigns.targeting_targetonly', compact('campaign', 'targetonly'));
-
             }
-
-        }
-        else {
+        } else {
             //default is blacklist
             $campaign = Campaign::findOrFail($id);
-            if($campaign->whitelist_only) {
+            if ($campaign->whitelist_only) {
                 $campaign = Campaign::findOrFail($id);
                 $targetonly = TargetOnly::where('campaign_id', '=', $id)->get();
                 
                 return view('campaigns.targeting_targetonly', compact('campaign', 'targetonly'));
-
+            } else {
+                $campaign = Campaign::findOrFail($id);
+                $blocks = CampaignBlock::where('campaign_id', '=', $id)->get();
+                return view('campaigns.targeting', compact('campaign', 'blocks'));
             }
-            else {
-            $campaign = Campaign::findOrFail($id);
-            $blocks = CampaignBlock::where('campaign_id', '=', $id)->get();
-            return view('campaigns.targeting', compact('campaign', 'blocks'));
-
-            }
-  
         }
     }
 
@@ -487,21 +465,18 @@ class CampaignController extends Controller
      */
     public function show(Campaign $campaign)
     {
-
-
-        if(Request::get('start') && Request::get('end')) {
+        $user_id = Auth::id();
+        if ($campaign->user_id != $user_id) {
+            exit("Not authorized");
+        }
+        if (Request::get('start') && Request::get('end')) {
             $reportStart =date('Y-m-d', strtotime(Request::get('start')));
             $reportEnd =date('Y-m-d', strtotime(Request::get('end')));
-
-        }
-        else {
+        } else {
             $reportStart = date('Y-m-d', time());
             $reportEnd =date('Y-m-d', time());
 
-            return redirect()->action( 'CampaignController@show', ['start' => $reportStart, 'end' => $reportEnd, 'campaign' => $campaign]);
-            
-            
-
+            return redirect()->action('CampaignController@show', ['start' => $reportStart, 'end' => $reportEnd, 'campaign' => $campaign]);
         }
 
 
@@ -511,35 +486,32 @@ class CampaignController extends Controller
         $reports = DB::select(DB::raw("select report_date, sum(impressions) impressions, sum(clicks) clicks from daily_ad_unit_reports where campaign_id = ? and report_date BETWEEN ? AND ? group by report_date"), [$campaign->id, $from, $to]);
         //dd($reports);
 
-                // $reports = DB::table('daily_ad_unit_reports')
-                // ->where('campaign_id', $campaign->id)
-                // ->whereBetween('report_date', array($from, $to))
-                // ->groupBy('report_date')
+        // $reports = DB::table('daily_ad_unit_reports')
+        // ->where('campaign_id', $campaign->id)
+        // ->whereBetween('report_date', array($from, $to))
+        // ->groupBy('report_date')
 
-                // ->get();
+        // ->get();
 
-                foreach($reports as $report) {
-
-                $cost= DB::table('clicks')
+        foreach ($reports as $report) {
+            $cost= DB::table('clicks')
                 ->where('click_date', $report->report_date)
                 ->where('campaign_id', $campaign->id)
                 ->sum('cost');
-                //print_r($cost);
-                if($cost) {
-                    $theCost = $cost;
-                }
-                else {
-                    $theCost = 0;
-                }
-                ///print_r($cost);
-                $report->cost=$theCost/100;
-                }
+            //print_r($cost);
+            if ($cost) {
+                $theCost = $cost;
+            } else {
+                $theCost = 0;
+            }
+            ///print_r($cost);
+            $report->cost=$theCost/100;
+        }
 
-                //print_r($reports);
+        //print_r($reports);
 
 
         return view('campaigns.show', compact('campaign', 'reports', 'cost'));
-
     }
 
     //     /**
@@ -564,6 +536,10 @@ class CampaignController extends Controller
      */
     public function edit(Campaign $campaign)
     {
+        $user_id = Auth::id();
+        if ($campaign->user_id != $user_id) {
+            exit("Not authorized");
+        }
         //
     }
 
@@ -576,6 +552,10 @@ class CampaignController extends Controller
      */
     public function update(CampaignRequest $req, Campaign $campaign)
     {
+        $user_id = Auth::id();
+        if ($campaign->user_id != $user_id) {
+            exit("Not authorized");
+        }
         //
         //$req['bid_amount'] = $req['bid_amount']*100;
 
@@ -598,224 +578,204 @@ class CampaignController extends Controller
         //         CampaignCountry::create($params);
         //     }
         // }
-                //Campaign::create($req);
+        //Campaign::create($req);
 
 
         //die();
 
-                //print_r($campaign);
-                //die();
-                //die();
+        //print_r($campaign);
+        //die();
+        //die();
         $ads = Ad::where('campaign_id', $campaign->id)->get();
 
-        if(isset($req['optradio'])) {
-            if($req['optradio'] == 'specific') {
+        if (isset($req['optradio'])) {
+            if ($req['optradio'] == 'specific') {
                 $originalDate = $req['datepicker'];
                 $newDate = date('Y-m-d H:i:s', strtotime($originalDate));
                 //print_r($newDate);
                 //print_r($newDate->format('Y-m-d H:i:s'));
                 $req['start_date'] = $newDate;
-            }
-            else {
+            } else {
                 $req['start_date']=date('Y-m-d H:i:s');
-
             }
         }
 
-        if(isset($req['optradio2'])) {
-            if($req['optradio2'] == 'specific') {
-
+        if (isset($req['optradio2'])) {
+            if ($req['optradio2'] == 'specific') {
                 $originalDate = $req['datepicker2'];
       
                 $newDate = date('Y-m-d H:i:s', strtotime($originalDate));
        
                 $req['end_date'] = $newDate;
-      
-            }
-            else {
+            } else {
                 $req['end_date']=null;
-
             }
         }
 
 
-        if($req['optradiocountry'] == "all") {
+        if ($req['optradiocountry'] == "all") {
             $req['all_countries']=1;
             $req['countries'] = "all";
-                foreach($ads as $ad) {
-                    $ad->countries="all";
-                    $ad->all_countries=1;
-                    $ad->save();
-                }
-
-        }
-        else {
-            $req['all_countries']=0;
-            foreach($ads as $ad) {
-                    $ad->countries="";
-                    $ad->all_countries=0;
-                    $ad->save();
-                }
-        }
-
-        if($req['optradiodevices'] == "specific") {
-            $req['all_devices']=0;
-            foreach($ads as $ad) {
-                    $ad->all_devices=0;
-                    $ad->save();
+            foreach ($ads as $ad) {
+                $ad->countries="all";
+                $ad->all_countries=1;
+                $ad->save();
             }
-
+        } else {
+            $req['all_countries']=0;
+            foreach ($ads as $ad) {
+                $ad->countries="";
+                $ad->all_countries=0;
+                $ad->save();
+            }
         }
-        else {
+
+        if ($req['optradiodevices'] == "specific") {
+            $req['all_devices']=0;
+            foreach ($ads as $ad) {
+                $ad->all_devices=0;
+                $ad->save();
+            }
+        } else {
             $req['all_devices']=1;
-             foreach($ads as $ad) {
-                    $ad->all_devices=1;
-                    $ad->save();
-            }           
+            foreach ($ads as $ad) {
+                $ad->all_devices=1;
+                $ad->save();
+            }
         }
         //dd($req['all_devices']);
 
-        if(isset($req['desktop'])) {
+        if (isset($req['desktop'])) {
             $req['desktop_enabled']=1;
-            foreach($ads as $ad) {
-                    $ad->desktop_enabled=1;
-                    $ad->save();
+            foreach ($ads as $ad) {
+                $ad->desktop_enabled=1;
+                $ad->save();
             }
-        }
-        else {
+        } else {
             $req['desktop_enabled']=0;
-            foreach($ads as $ad) {
-                    $ad->desktop_enabled=0;
-                    $ad->save();
+            foreach ($ads as $ad) {
+                $ad->desktop_enabled=0;
+                $ad->save();
             }
         }
         
-        if(isset($req['mobile'])) {
+        if (isset($req['mobile'])) {
             $req['mobile_enabled']=1;
-            foreach($ads as $ad) {
-                    $ad->mobile_enabled=1;
-                    $ad->save();
+            foreach ($ads as $ad) {
+                $ad->mobile_enabled=1;
+                $ad->save();
             }
-        }
-        else {
+        } else {
             $req['mobile_enabled']=0;
-            foreach($ads as $ad) {
-                    $ad->mobile_enabled=0;
-                    $ad->save();
+            foreach ($ads as $ad) {
+                $ad->mobile_enabled=0;
+                $ad->save();
             }
         }
 
-        if(isset($req['tablet'])) {
+        if (isset($req['tablet'])) {
             $req['tablet_enabled']=1;
-            foreach($ads as $ad) {
-                    $ad->tablet_enabled=1;
-                    $ad->save();
+            foreach ($ads as $ad) {
+                $ad->tablet_enabled=1;
+                $ad->save();
             }
-        }
-        else {
+        } else {
             $req['tablet_enabled']=0;
-            foreach($ads as $ad) {
-                    $ad->tablet_enabled=0;
-                    $ad->save();
+            foreach ($ads as $ad) {
+                $ad->tablet_enabled=0;
+                $ad->save();
             }
         }
 
 
-        if(isset($req['optradioos'])) {
-
-            if($req['optradioos'] =='specific') {
+        if (isset($req['optradioos'])) {
+            if ($req['optradioos'] =='specific') {
                 $req['all_operating_systems']=0;
-                foreach($ads as $ad) {
+                foreach ($ads as $ad) {
                     $ad->all_operating_systems=0;
                     $ad->save();
                 }
-
-            }
-            else {
+            } else {
                 $req['all_operating_systems']=1;
-                foreach($ads as $ad) {
+                foreach ($ads as $ad) {
                     $ad->all_operating_systems=1;
                     $ad->save();
                 }
             }
-            
-        } 
-        else { 
+        } else {
             $req['all_operating_systems']=0;
-            foreach($ads as $ad) {
-                    $ad->all_operating_systems=0;
-                    $ad->save();
-                }
+            foreach ($ads as $ad) {
+                $ad->all_operating_systems=0;
+                $ad->save();
+            }
         }
         
 
-        if(isset($req['android'])) {
+        if (isset($req['android'])) {
             $req['android_enabled']=1;
-            foreach($ads as $ad) {
-                    $ad->android_enabled=1;
-                    $ad->save();
-                }
-        }
-        else {
+            foreach ($ads as $ad) {
+                $ad->android_enabled=1;
+                $ad->save();
+            }
+        } else {
             $req['android_enabled']=0;
-            foreach($ads as $ad) {
-                    $ad->android_enabled=0;
-                    $ad->save();
+            foreach ($ads as $ad) {
+                $ad->android_enabled=0;
+                $ad->save();
             }
         }
 
-        if(isset($req['ios'])) {
+        if (isset($req['ios'])) {
             $req['ios_enabled']=1;
-            foreach($ads as $ad) {
-                    $ad->ios_enabled=1;
-                    $ad->save();
+            foreach ($ads as $ad) {
+                $ad->ios_enabled=1;
+                $ad->save();
             }
-        }
-        else {
+        } else {
             $req['ios_enabled']=0;
-            foreach($ads as $ad) {
-                    $ad->ios_enabled=0;
-                    //$ad->save();
+            foreach ($ads as $ad) {
+                $ad->ios_enabled=0;
+                //$ad->save();
             }
         }
         $req['bid_amount'] = $req['bid_amount'] * 100;
         $req['budget_amount'] = $req['budget_amount'] * 100;
         $req['bid_range_low']=$req['bid_amount'];
         $req['bid_range_high']=$req['bid_amount'];
-        foreach($ads as $ad) {
-                    $ad->bid_amount=$req['bid_amount'];
-                    $ad->save();
+        foreach ($ads as $ad) {
+            $ad->bid_amount=$req['bid_amount'];
+            $ad->save();
         }
 
 
         //($req->all());
         //die();
         //print("REQUEST<br><br>");
-         //print_r($req->all());
-         //die();
+        //print_r($req->all());
+        //die();
         //check if campaign budget has been raised if it had been stopped for that reason.
         
         $reportDate = date('Y-m-d', time());
 
         $c_cost_for_today = DB::select(DB::raw("select report_date, sum(total_cost) total_cost from daily_ad_unit_reports where campaign_id = ? and report_date = ? group by report_date"), [$campaign->id, $reportDate]);
-        if(count($c_cost_for_today) > 0) {
-          $campaign_cost_for_today=$c_cost_for_today[0]->total_cost;
+        if (count($c_cost_for_today) > 0) {
+            $campaign_cost_for_today=$c_cost_for_today[0]->total_cost;
         
    
 
-        if($campaign->status == 'campaign_reached_budget') {
-            if($campaign->budget_amount > $campaign_cost_for_today) {
-                $campaign->status='active';
-                $ads = Ad::where('campaign_id', $campaign->id)->get();
+            if ($campaign->status == 'campaign_reached_budget') {
+                if ($campaign->budget_amount > $campaign_cost_for_today) {
+                    $campaign->status='active';
+                    $ads = Ad::where('campaign_id', $campaign->id)->get();
 
-                foreach($ads as $ad) {
-                    if($ad->campaign_status = 'campaign_reached_budget') {
-                        $ad->campaign_status="active";
-                        $ad->save();
+                    foreach ($ads as $ad) {
+                        if ($ad->campaign_status = 'campaign_reached_budget') {
+                            $ad->campaign_status="active";
+                            $ad->save();
+                        }
                     }
                 }
             }
-        }
         }
 
 
@@ -825,7 +785,6 @@ class CampaignController extends Controller
 
         $campaigns=Campaign::all();
         return view('campaigns.index', compact('campaigns'));
-
     }
 
 
@@ -839,6 +798,10 @@ class CampaignController extends Controller
      */
     public function destroy(Campaign $campaign)
     {
+        $user_id = Auth::id();
+        if ($campaign->user_id != $user_id) {
+            exit("Not authorized");
+        }
         //
     }
 }
