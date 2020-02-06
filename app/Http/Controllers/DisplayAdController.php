@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
 use Jenssegers\Agent\Agent;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
