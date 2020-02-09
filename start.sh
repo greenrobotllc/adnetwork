@@ -1,1 +1,2 @@
-cd laradock; docker-compose down; docker-compose up -d workspace nginx mariadb;
+#!/bin/bash
+cd laradock || exit; docker-compose down; docker-compose up -d workspace nginx mariadb;
