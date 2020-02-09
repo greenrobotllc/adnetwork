@@ -25,6 +25,19 @@ php composer.phar install
 
 -php 7.2 or greater.
 
+# TODO
+-Before you start using this network for real transactions, you'll want to replace the links in the project (SUPPORT CONTACT US BLOG DMCA PRIVACY TERMS) with those of your own.
+
+-There is a problem with so far with configuring image upload paths.
+The problem is the site is referencing my S3 bucket URL.
+
+If you search through the code base for "gradnetwork", and make it a configurable variable you should be able to fix the problem.
+
+grep -nr "gradnetwork" *
+
+I would welcome any pull requests fixing this issue.
+
+
 # FAQ
 Question: How to access admin panel? What is login or password?
 
