@@ -17,9 +17,10 @@ nano .env
 -Run: 
 php artisan key:generate
 
-
 -Run:
 php composer.phar install
+
+-Configure Amazon S3 image hosting, or other file provider and see the TODO below.
 
 # Requirements
 
@@ -28,14 +29,14 @@ php composer.phar install
 # TODO
 -Before you start using this network for real transactions, you'll want to replace the links in the project (SUPPORT CONTACT US BLOG DMCA PRIVACY TERMS) with those of your own.
 
--Reported bug: There is a problem with configuring image upload paths.
+-Reported bug: There is a problem with seeing images you upload.
 The problem is the site is referencing a static S3 bucket URL.
 
 If you search through the code base for "gradnetwork", and make it a configurable variable you should be able to fix the problem.
 
 grep -nr "gradnetwork" *
 
-I would welcome any pull requests fixing this issue.
+I would welcome any pull requests fixing this issue, including a pull request for this README.
 
 
 # FAQ
