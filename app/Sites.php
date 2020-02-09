@@ -14,23 +14,27 @@ class Sites extends Model
     public $incrementing = false;
 
 
-        protected static function boot()
+    protected static function boot()
     {
         parent::boot();
 
-        static::creating(function ($model) {
-            if (Auth::check()) {
-                $model->user_id = Auth::id();
-                //$model->updated_by_id = Auth::id();
-                $model->id = Uuid::generate()->string;
+        static::creating(
+            function ($model) {
+                if (Auth::check()) {
+                    $model->user_id = Auth::id();
+                    //$model->updated_by_id = Auth::id();
+                    $model->id = Uuid::generate()->string;
 
+                }
             }
-        });
+        );
 
-        static::updating(function($model) {
-            if (Auth::check()) {
-                //$model->updated_by_id = Auth::id();
+        static::updating(
+            function ($model) {
+                if (Auth::check()) {
+                    //$model->updated_by_id = Auth::id();
+                }
             }
-        });
+        );
     }  
 }
