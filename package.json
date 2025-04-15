@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@hapi/cryptiles": ">=4.1.2",
-    "axios": "^1.7.4",
+    "axios": "^1.8.2",
     "bootstrap-sass": "^3.4.1",
     "cross-env": "^7.0.3",
     "gulp": "^5.0.0",
