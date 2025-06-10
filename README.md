@@ -70,7 +70,7 @@ Answer: In your .env file, set APP_DEBUG to false.
 - [Remote Dev Jobs](https://remotedevjobs.greenrobot.com) - Find thousands of Remote Developer/Engineer jobs. Updated every few hours with new jobs from VC funded companies.
 - [Mental Health Lawyers](https://mentalhealthlawyers.greenrobot.com) - Directory of Mental Health Lawyers in the USA for involuntary commitment and guardianship issues.
 - [3D Web Games](https://3dwebgames.com) - Discover 3D web games in this curated directory in the style of a video game store/Blockbuster.
-- [3D Tank Game](https://3dtankgame.com) - Fun free tank survival game. No login or app required.
+- [3D Tank Battle](https://3dtankbattle.com) - Fun free tank survival game. No login or app required.
 - [Cartoonify](https://cartoonify.greenrobot.com) - Turn Yourself Into A Cartoon for Free.
 - [Job Search](https://jobsearch.greenrobot.com) - Discover jobs at portfolio companies backed by Venture Capitalists
 - [Wizard Writer](https://wizardwriter.greenrobot.com) - Automatically write blog posts
