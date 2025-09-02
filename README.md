@@ -1,3 +1,5 @@
+Warning: I have not used this adnetwork for quite some time as I don't have enough impressions to warrant it. I did merge in some dependabot PRs without testing. I hope to one day have enough ad impresions to use this project again.
+
 # adnetwork
 Liberty Ad Network
 ![Screenshot 1](https://github.com/greenrobotllc/adnetwork/blob/master/sampleimages/image1.png)
