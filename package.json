@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "atob": "^2.1.2",
-    "diff": "^4.0.1",
+    "diff": "^8.0.3",
     "lodash.template": "^4.5.0",
     "no-case": "^2.3.2"
   }
